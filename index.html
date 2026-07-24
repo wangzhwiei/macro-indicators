@@ -67,12 +67,36 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <h1>📊 宏观高频指标观测面板</h1>
 <div class="sub">基于iFinD EDB日频/周频数据 · 华泰固收基本面分析框架 · 8大类109个指标 · 每周一自动更新</div>
 <div class="stats">
-<span>📅 更新: 2026-07-22</span>
+<span>📅 更新: 2026-07-24</span>
 <span>📈 指标总数: 109</span>
 <span>🔄 日频76 + 周频33</span>
 </div>
 </header>
 <main>
+<div class="cat-section">
+<div class="cat-header open" onclick="toggleCat(this)">
+<h2>📊 大类看多/看空面板 <span class="badge">热力图</span></h2>
+<div class="time-filters" id="heatmapFilters" style="display:flex;gap:8px">
+<button data-hm-range="1m" onclick="setHmRange('1m')">1个月</button>
+<button data-hm-range="3m" class="active" onclick="setHmRange('3m')">3个月</button>
+<button data-hm-range="6m" onclick="setHmRange('6m')">6个月</button>
+<button data-hm-range="1y" onclick="setHmRange('1y')">1年</button>
+<button data-hm-range="all" onclick="setHmRange('all')">全部</button>
+</div>
+<span class="arrow">▼</span>
+</div>
+<div class="cat-body">
+<div class="ratio-chart" id="heatmap_chart" style="width:100%;height:320px"></div>
+</div></div>
+
+<div class="cat-section">
+<div class="cat-header open" onclick="toggleCat(this)">
+<h2>📈 大类看多比例汇总 <span class="badge">汇总</span></h2>
+<span class="arrow">▼</span>
+</div>
+<div class="cat-body">
+<div class="ratio-chart" id="ratio_overall" style="width:100%;height:400px"></div>
+</div></div>
 <div class="cat-section">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>社融 高频观测 <span class="badge">9指标</span></h2>
@@ -1524,25 +1548,8 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td>+0.21%</td>
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
-</tr></tbody></table></div></div></div>
-<div class="cat-section">
-<div class="cat-header open" onclick="toggleCat(this)">
-<h2>📊 大类看多/看空面板 <span class="badge">近3月</span></h2>
-<span class="arrow">▼</span>
-</div>
-<div class="cat-body">
-<div class="ratio-chart" id="heatmap_chart" style="width:100%;height:320px"></div>
-</div></div>
-
-<div class="cat-section">
-<div class="cat-header open" onclick="toggleCat(this)">
-<h2>📈 大类看多比例汇总 <span class="badge">汇总</span></h2>
-<span class="arrow">▼</span>
-</div>
-<div class="cat-body">
-<div class="ratio-chart" id="ratio_overall" style="width:100%;height:400px"></div>
-</div></div></main>
-<footer>宏观高频指标观测面板 · 数据源:iFinD EDB · 华泰固收分析框架 · 生成时间: 2026-07-22 08:00</footer>
+</tr></tbody></table></div></div></div></main>
+<footer>宏观高频指标观测面板 · 数据源:iFinD EDB · 华泰固收分析框架 · 生成时间: 2026-07-24 06:20</footer>
 <div class="modal" id="chartModal">
 <div class="modal-content">
 <div class="modal-header">
@@ -1651,19 +1658,35 @@ function closeChart() {
 }
 
 // 看多/看空面板热力图
+let hmChart = null;
+let hmRange = '3m';
 function renderHeatmap() {
     var hm = MACRO_DATA['_heatmap'];
     if (!hm) return;
-    var c = echarts.init(document.getElementById('heatmap_chart'));
+    var el = document.getElementById('heatmap_chart');
+    if (!el) return;
+    if (hmChart) hmChart.dispose();
+    hmChart = echarts.init(el);
     var catNames = hm.categories;
     var dates = hm.dates;
-    var data = hm.data.map(function(d) { return [d[0], d[1], d[2]]; });
     
-    c.setOption({
+    // 按时间范围过滤
+    var rangeMap = {'1m': 4, '3m': 13, '6m': 26, '1y': 52, 'all': 999};
+    var cutoff = rangeMap[hmRange] || 13;
+    var filteredDates = dates.slice(-cutoff);
+    var filteredData = hm.data.filter(function(d) {
+        return d[0] >= dates.length - cutoff;
+    });
+    
+    var data = filteredData.map(function(d) {
+        return [d[0] - (dates.length - filteredDates.length), d[1], d[2]];
+    });
+    
+    hmChart.setOption({
         tooltip: {
             formatter: function(p) {
                 var cat = catNames[p.value[1]];
-                var date = dates[p.value[0]];
+                var date = filteredDates[p.value[0]];
                 var v = p.value[2];
                 var label = v > 0 ? '看多' : (v < 0 ? '看空' : '中性');
                 return cat + ' ' + date + ' ' + label;
@@ -1671,7 +1694,7 @@ function renderHeatmap() {
         },
         grid: { left: 90, right: 20, top: 10, bottom: 50 },
         xAxis: {
-            type: 'category', data: dates,
+            type: 'category', data: filteredDates,
             axisLabel: { formatter: function(v) { var parts=v.split('-'); return parts[1]+'-'+parts[2]; }, fontSize: 9 },
             splitArea: { show: true }
         },
@@ -1693,6 +1716,20 @@ function renderHeatmap() {
             emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.5)' } }
         }]
     });
+    
+    // 点击单元格 → 弹窗显示该大类该周的指标明细
+    hmChart.on('click', function(params) {
+        var cat = catNames[params.value[1]];
+        var date = filteredDates[params.value[0]];
+        showCatDetail(cat, date);
+    });
+}
+
+function setHmRange(range) {
+    hmRange = range;
+    document.querySelectorAll('#heatmapFilters button').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelector('#heatmapFilters button[data-hm-range="' + range + '"]').classList.add('active');
+    renderHeatmap();
 }
 
 // 初始化
@@ -1700,6 +1737,92 @@ document.addEventListener('DOMContentLoaded', function() {
     renderHeatmap();
     renderOverallRatioChart(echarts.init(document.getElementById('ratio_overall')));
 });
+
+// 点击热力图单元格 → 弹窗显示该大类该周的指标明细
+function showCatDetail(cat, date) {
+    var cd = MACRO_DATA[cat];
+    if (!cd) return;
+    var indicators = cd.indicators || [];
+    
+    // 找到该日期 <= date 的最新值，以及7天前的值
+    var details = [];
+    for (var i = 0; i < indicators.length; i++) {
+        var ind = indicators[i];
+        var dates = ind.chart_dates;
+        var vals = ind.chart_values;
+        if (!dates || dates.length < 2) continue;
+        
+        // 找 <= date 的最新日期
+        var bestIdx = -1;
+        for (var j = dates.length - 1; j >= 0; j--) {
+            if (dates[j] <= date) { bestIdx = j; break; }
+        }
+        if (bestIdx < 0) continue;
+        
+        var curVal = vals[bestIdx];
+        var curDate = dates[bestIdx];
+        
+        // 找7天前的值
+        var target = new Date(curDate);
+        target.setDate(target.getDate() - 7);
+        var targetStr = target.toISOString().split('T')[0];
+        var prevIdx = -1;
+        for (var j = 0; j <= bestIdx; j++) {
+            if (dates[j] <= targetStr) prevIdx = j;
+        }
+        var prevVal = prevIdx >= 0 ? vals[prevIdx] : vals[0];
+        var chg = curVal - prevVal;
+        
+        var sig = 'neutral';
+        if (chg > 0.0001) sig = 'bearish';
+        else if (chg < -0.0001) sig = 'bullish';
+        
+        details.push({
+            name: ind.name,
+            curDate: curDate,
+            curVal: curVal,
+            prevVal: prevVal,
+            change: chg,
+            signal: sig
+        });
+    }
+    
+    // 弹窗
+    var modal = document.getElementById('chartModal');
+    var title = document.getElementById('chartTitle');
+    var container = document.getElementById('chartContainer');
+    title.textContent = cd.display + ' - ' + date + ' 指标明细';
+    modal.classList.add('active');
+    
+    if (chartInstance) chartInstance.dispose();
+    if (ratioChartInstance) ratioChartInstance.dispose();
+    
+    // 用表格展示
+    var html = '<table style="width:100%;font-size:12px;margin-top:16px">' +
+        '<tr style="background:#f0f2f5">' +
+        '<th style="padding:6px 8px;text-align:left">指标</th>' +
+        '<th style="padding:6px 8px;text-align:right">日期</th>' +
+        '<th style="padding:6px 8px;text-align:right">上期值</th>' +
+        '<th style="padding:6px 8px;text-align:right">最新值</th>' +
+        '<th style="padding:6px 8px;text-align:right">变动</th>' +
+        '<th style="padding:6px 8px;text-align:center">方向</th></tr>';
+    
+    for (var i = 0; i < details.length; i++) {
+        var d = details[i];
+        var sigClass = d.signal === 'bullish' ? 'tag-bullish' : (d.signal === 'bearish' ? 'tag-bearish' : 'tag-neutral');
+        var sigLabel = d.signal === 'bullish' ? '利多' : (d.signal === 'bearish' ? '利空' : '中性');
+        var chgClass = d.change > 0.0001 ? 'val-up' : (d.change < -0.0001 ? 'val-down' : 'val-neutral');
+        html += '<tr>' +
+            '<td style="padding:5px 8px">' + d.name + '</td>' +
+            '<td style="padding:5px 8px;text-align:right">' + d.curDate + '</td>' +
+            '<td style="padding:5px 8px;text-align:right">' + d.prevVal + '</td>' +
+            '<td style="padding:5px 8px;text-align:right">' + d.curVal + '</td>' +
+            '<td class="' + chgClass + '" style="padding:5px 8px;text-align:right">' + (d.change > 0 ? '+' : '') + d.change.toFixed(4) + '</td>' +
+            '<td style="padding:5px 8px;text-align:center"><span class="tag ' + sigClass + '">' + sigLabel + '</span></td></tr>';
+    }
+    html += '</table>';
+    container.innerHTML = html;
+}
 
 document.getElementById('chartModal').addEventListener('click',function(e){if(e.target===this)closeChart()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeChart()});

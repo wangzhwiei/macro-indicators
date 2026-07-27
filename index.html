@@ -1560,7 +1560,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
 </tr></tbody></table></div></div></div></main>
-<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-27 01:39</footer>
+<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-27 01:45</footer>
 <div class="modal" id="chartModal">
 <div class="modal-content">
 <div class="modal-header">
@@ -1817,7 +1817,7 @@ function showCatDetail(cat, date) {
     if (ratioChartInstance) ratioChartInstance.dispose();
     
     // 用表格展示
-    var html = '<table style="width:100%;font-size:12px;margin-top:16px">' +
+    var html = '<div style="overflow-y:auto;max-height:60vh;background:#fff;padding:0 24px 16px"><table style="width:100%;font-size:12px">' +
         '<tr style="background:#f0f2f5">' +
         '<th style="padding:6px 8px;text-align:left">指标</th>' +
         '<th style="padding:6px 8px;text-align:right">日期</th>' +
@@ -1839,7 +1839,7 @@ function showCatDetail(cat, date) {
             '<td class="' + chgClass + '" style="padding:5px 8px;text-align:right">' + (d.change > 0 ? '+' : '') + d.change.toFixed(4) + '</td>' +
             '<td style="padding:5px 8px;text-align:center"><span class="tag ' + sigClass + '">' + sigLabel + '</span></td></tr>';
     }
-    html += '</table>';
+    html += '</table></div>';
     container.innerHTML = html;
 }
 

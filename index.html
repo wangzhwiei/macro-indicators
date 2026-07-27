@@ -1560,7 +1560,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
 </tr></tbody></table></div></div></div></main>
-<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-27 03:02</footer>
+<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-27 03:20</footer>
 <div class="modal" id="chartModal">
 <div class="modal-content">
 <div class="modal-header">
@@ -1586,7 +1586,8 @@ let ratioChartInstance = null;
 
 function toggleCat(el){el.classList.toggle('open');var b=el.nextElementSibling;if(b.classList.contains('collapsed')){b.classList.remove('collapsed');b.style.maxHeight=b.scrollHeight+'px'}else{b.classList.add('collapsed');b.style.maxHeight='0px'}}
 
-function openChart(key){var p=key.split('_'),cat=p[0],idx=parseInt(p[1]),catData=MACRO_DATA[cat];if(!catData||!catData.indicators||!catData.indicators[idx])return;var ind=catData.indicators[idx];if(!ind.chart_dates||!ind.chart_dates.length)return;currentIndicator={cat,idx,ind};if(ratioChartInstance){ratioChartInstance.dispose();ratioChartInstance=null};document.getElementById('timeFilters').style.display='flex';document.getElementById('chartTitle').textContent=ind.name+' ('+ind.freq+')';document.getElementById('chartModal').classList.add('active');document.querySelectorAll('#timeFilters button').forEach(function(b){b.classList.remove('active')});document.querySelector('#timeFilters button[data-range="all"]').classList.add('active');renderChart('all')}
+function openChart(key){var p=key.split('_'),cat=p[0],idx=parseInt(p[1]),catData=MACRO_DATA[cat];if(!catData||!catData.indicators||!catData.indicators[idx])return;var ind=catData.indicators[idx];if(!ind.chart_dates||!ind.chart_dates.length)return;currentIndicator={cat,idx,ind};if(ratioChartInstance){ratioChartInstance.dispose();ratioChartInstance=null};document.getElementById('timeFilters').style.display='flex';document.getElementById('chartTitle').textContent=ind.name+' ('+ind.freq+')';document.getElementById('chartModal').classList.add('active');
+    document.getElementById('timeFilters').style.display = 'none';document.querySelectorAll('#timeFilters button').forEach(function(b){b.classList.remove('active')});document.querySelector('#timeFilters button[data-range="all"]').classList.add('active');renderChart('all')}
 
 function setRange(range){document.querySelectorAll('#timeFilters button').forEach(function(b){b.classList.remove('active')});document.querySelector('#timeFilters button[data-range="'+range+'"]').classList.add('active');renderChart(range)}
 
@@ -1596,6 +1597,7 @@ function renderChart(range){if(!currentIndicator)return;var ind=currentIndicator
 function openRatioChart(cat) {
     document.getElementById('chartTitle').textContent = cat === '_overall' ? '大类看多比例汇总' : (MACRO_DATA[cat] ? MACRO_DATA[cat].display : cat) + ' - 看多比例趋势';
     document.getElementById('chartModal').classList.add('active');
+    document.getElementById('timeFilters').style.display = 'none';
     document.getElementById('timeFilters').style.display = 'none';
     if (ratioChartInstance) ratioChartInstance.dispose();
     var container = document.getElementById('chartContainer');
@@ -1811,6 +1813,15 @@ function showCatDetail(cat, date) {
     var modal = document.getElementById('chartModal');
     var title = document.getElementById('chartTitle');
     var container = document.getElementById('chartContainer');
+    
+    // 统计看多/看空个数
+    var bullCount = 0, bearCount = 0, neutralCount = 0;
+    for (var i = 0; i < details.length; i++) {
+        if (details[i].signal === 'bullish') bullCount++;
+        else if (details[i].signal === 'bearish') bearCount++;
+        else neutralCount++;
+    }
+    
     title.textContent = cd.display + ' - ' + date + ' 指标明细';
     modal.classList.add('active');
     
@@ -1818,7 +1829,13 @@ function showCatDetail(cat, date) {
     if (ratioChartInstance) ratioChartInstance.dispose();
     
     // 用表格展示
-    var html = '<div style="overflow-y:auto;max-height:60vh;background:#fff;padding:0 24px 16px"><table style="width:100%;font-size:12px">' +
+    var html = '<div style="overflow-y:auto;max-height:60vh;background:#fff;padding:0 24px 16px">' +
+        '<div style="display:flex;gap:16px;padding:8px 0;font-size:13px">' +
+        '<span style="color:var(--red);font-weight:600">看多 ' + bullCount + '</span>' +
+        '<span style="color:var(--green);font-weight:600">看空 ' + bearCount + '</span>' +
+        '<span style="color:var(--gray);font-weight:600">中性 ' + neutralCount + '</span>' +
+        '<span style="margin-left:auto;color:var(--text2)">共 ' + details.length + ' 个指标</span></div>' +
+        '<table style="width:100%;font-size:12px">' +
         '<tr style="background:#f0f2f5">' +
         '<th style="padding:6px 8px;text-align:left">指标</th>' +
         '<th style="padding:6px 8px;text-align:right">日期</th>' +

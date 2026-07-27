@@ -1560,7 +1560,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
 </tr></tbody></table></div></div></div></main>
-<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-27 03:20</footer>
+<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-27 09:32</footer>
 <div class="modal" id="chartModal">
 <div class="modal-content">
 <div class="modal-header">
@@ -1587,7 +1587,7 @@ let ratioChartInstance = null;
 function toggleCat(el){el.classList.toggle('open');var b=el.nextElementSibling;if(b.classList.contains('collapsed')){b.classList.remove('collapsed');b.style.maxHeight=b.scrollHeight+'px'}else{b.classList.add('collapsed');b.style.maxHeight='0px'}}
 
 function openChart(key){var p=key.split('_'),cat=p[0],idx=parseInt(p[1]),catData=MACRO_DATA[cat];if(!catData||!catData.indicators||!catData.indicators[idx])return;var ind=catData.indicators[idx];if(!ind.chart_dates||!ind.chart_dates.length)return;currentIndicator={cat,idx,ind};if(ratioChartInstance){ratioChartInstance.dispose();ratioChartInstance=null};document.getElementById('timeFilters').style.display='flex';document.getElementById('chartTitle').textContent=ind.name+' ('+ind.freq+')';document.getElementById('chartModal').classList.add('active');
-    document.getElementById('timeFilters').style.display = 'none';document.querySelectorAll('#timeFilters button').forEach(function(b){b.classList.remove('active')});document.querySelector('#timeFilters button[data-range="all"]').classList.add('active');renderChart('all')}
+    document.querySelectorAll('#timeFilters button').forEach(function(b){b.classList.remove('active')});document.querySelector('#timeFilters button[data-range="all"]').classList.add('active');renderChart('all')}
 
 function setRange(range){document.querySelectorAll('#timeFilters button').forEach(function(b){b.classList.remove('active')});document.querySelector('#timeFilters button[data-range="'+range+'"]').classList.add('active');renderChart(range)}
 

@@ -1560,7 +1560,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
 </tr></tbody></table></div></div></div></main>
-<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-27 01:45</footer>
+<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-27 01:56</footer>
 <div class="modal" id="chartModal">
 <div class="modal-content">
 <div class="modal-header">
@@ -1767,40 +1767,19 @@ function showCatDetail(cat, date) {
     var details = [];
     for (var i = 0; i < indicators.length; i++) {
         var ind = indicators[i];
-        var dates = ind.chart_dates;
-        var vals = ind.chart_values;
-        if (!dates || dates.length < 2) continue;
+        if (!ind.chart_dates || ind.chart_dates.length < 2) continue;
         
-        // 找 <= date 的最新日期
-        var bestIdx = -1;
-        for (var j = dates.length - 1; j >= 0; j--) {
-            if (dates[j] <= date) { bestIdx = j; break; }
-        }
-        if (bestIdx < 0) continue;
-        
-        var curVal = vals[bestIdx];
-        var curDate = dates[bestIdx];
-        
-        // 找7天前的值
-        var target = new Date(curDate);
-        target.setDate(target.getDate() - 7);
-        var targetStr = target.toISOString().split('T')[0];
-        var prevIdx = -1;
-        for (var j = 0; j <= bestIdx; j++) {
-            if (dates[j] <= targetStr) prevIdx = j;
-        }
-        var prevVal = prevIdx >= 0 ? vals[prevIdx] : vals[0];
-        var chg = curVal - prevVal;
-        
+        // 直接使用存储的值，保证与面板一致
+        var chg = ind.change || 0;
         var sig = 'neutral';
         if (chg > 0.0001) sig = 'bearish';
         else if (chg < -0.0001) sig = 'bullish';
         
         details.push({
             name: ind.name,
-            curDate: curDate,
-            curVal: curVal,
-            prevVal: prevVal,
+            curDate: ind.latest_date || '',
+            curVal: ind.latest_val || 0,
+            prevVal: ind.prev_val || 0,
             change: chg,
             signal: sig
         });

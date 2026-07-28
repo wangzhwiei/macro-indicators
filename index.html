@@ -85,6 +85,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <span class="arrow">▼</span>
 </div>
 <div class="cat-body" style="max-height:none!important">
+<div style="display:flex;gap:6px;padding:8px 16px;flex-wrap:wrap" id="catQuickNav"></div>
 <div class="ratio-chart" id="heatmap_chart" style="width:100%;height:400px"></div>
 </div></div>
 
@@ -96,7 +97,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <div class="cat-body">
 <div class="ratio-chart" id="ratio_overall" style="width:100%;height:400px"></div>
 </div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_社融">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>社融 高频观测 <span class="badge">9指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -220,7 +221,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-ifind">iFinD</span></td>
 </tr></tbody></table></div></div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_消费">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>消费 高频观测 <span class="badge">13指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -392,7 +393,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bullish">利多</span></td>
 <td><span class="src-tag src-ifind">iFinD</span></td>
 </tr></tbody></table></div></div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_地产">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>地产 高频观测 <span class="badge">13指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -564,7 +565,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bullish">利多</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
 </tr></tbody></table></div></div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_基建">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>基建 高频观测 <span class="badge">6指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -652,7 +653,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bullish">利多</span></td>
 <td><span class="src-tag src-ifind">iFinD</span></td>
 </tr></tbody></table></div></div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_工业生产">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>工业生产 高频观测 <span class="badge">14指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -836,7 +837,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bullish">利多</span></td>
 <td><span class="src-tag src-ifind">iFinD</span></td>
 </tr></tbody></table></div></div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_库存投资">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>库存投资 高频观测 <span class="badge">10指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -972,7 +973,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bullish">利多</span></td>
 <td><span class="src-tag src-ifind">iFinD</span></td>
 </tr></tbody></table></div></div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_物价">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>物价 高频观测 <span class="badge">34指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -1396,7 +1397,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bullish">利多</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
 </tr></tbody></table></div></div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_进出口">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>进出口 高频观测 <span class="badge">6指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -1484,7 +1485,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-ifind">iFinD</span></td>
 </tr></tbody></table></div></div></div>
-<div class="cat-section">
+<div class="cat-section" id="cat_汇率">
 <div class="cat-header open" onclick="toggleCat(this)">
 <h2>汇率 高频观测 <span class="badge">5指标</span></h2>
 <div style="display:flex;align-items:center;gap:12px">
@@ -1560,7 +1561,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
 </tr></tbody></table></div></div></div></main>
-<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-28 02:17</footer>
+<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-28 03:31</footer>
 <div class="modal" id="chartModal">
 <div class="modal-content">
 <div class="modal-header">
@@ -1660,6 +1661,12 @@ function renderOverallRatioChart(c) {
             areaStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(9,132,227,0.2)'},{offset:1,color:'rgba(9,132,227,0.02)'}]) },
             markLine: { silent: true, data: [{ yAxis: 50, label: { formatter: '50%' }, lineStyle: { color: '#b2bec3', type: 'dashed' } }] } }]
     });
+    
+    // 点击曲线上点 → 弹窗显示该日期各指标看多/看空明细
+    c.on('click', function(params) {
+        var date = sortedDates[params.dataIndex];
+        showCatDetail('_overall', date);
+    });
 }
 
 function closeChart() {
@@ -1755,6 +1762,24 @@ document.addEventListener('DOMContentLoaded', function() {
     threeMonthsAgo.setDate(threeMonthsAgo.getDate() - 90);
     document.getElementById('hmStart').value = threeMonthsAgo.toISOString().split('T')[0];
     document.getElementById('hmEnd').value = today.toISOString().split('T')[0];
+    
+    // 生成大类快捷导航
+    var nav = document.getElementById('catQuickNav');
+    if (nav) {
+        CAT_ORDER.forEach(function(cat) {
+            var btn = document.createElement('button');
+            btn.textContent = cat;
+            btn.style.cssText = 'padding:4px 12px;font-size:12px;border:1px solid var(--border);border-radius:12px;background:#fff;cursor:pointer;color:var(--text2);transition:all .2s';
+            btn.onmouseenter = function() { this.style.background='var(--blue)'; this.style.color='#fff'; };
+            btn.onmouseleave = function() { this.style.background='#fff'; this.style.color='var(--text2)'; };
+            btn.onclick = function() {
+                var el = document.getElementById('cat_' + cat);
+                if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+            };
+            nav.appendChild(btn);
+        });
+    }
+    
     renderHeatmap();
     renderOverallRatioChart(echarts.init(document.getElementById('ratio_overall')));
 });
@@ -1762,51 +1787,87 @@ document.addEventListener('DOMContentLoaded', function() {
 // 点击热力图单元格 → 弹窗显示该大类该周的指标明细
 function showCatDetail(cat, date) {
     var cd = MACRO_DATA[cat];
-    if (!cd) return;
-    var indicators = cd.indicators || [];
+    var indicators = cd ? cd.indicators || [] : [];
     
+    // _overall 时，展示所有大类在该日期的看多/看空统计
     var details = [];
-    for (var i = 0; i < indicators.length; i++) {
-        var ind = indicators[i];
-        var dates = ind.chart_dates;
-        var vals = ind.chart_values;
-        if (!dates || dates.length < 2) continue;
-        
-        // 找该 date 当天的值（<= date 的最新）
-        var bestIdx = -1;
-        for (var j = dates.length - 1; j >= 0; j--) {
-            if (dates[j] <= date) { bestIdx = j; break; }
-        }
-        if (bestIdx < 0) continue;
-        
-        var curVal = vals[bestIdx];
-        var curDate = dates[bestIdx];
-        
-        // 找7天前的值
-        var target = new Date(curDate);
-        target.setDate(target.getDate() - 7);
-        var targetStr = target.toISOString().split('T')[0];
-        var prevIdx = -1;
-        for (var j = 0; j <= bestIdx; j++) {
-            if (dates[j] <= targetStr) prevIdx = j;
-        }
-        var prevVal = prevIdx >= 0 ? vals[prevIdx] : vals[0];
-        var prevDate = prevIdx >= 0 ? dates[prevIdx] : dates[0];
-        var chg = curVal - prevVal;
-        
-        var sig = 'neutral';
-        if (chg > 0.0001) sig = 'bearish';
-        else if (chg < -0.0001) sig = 'bullish';
-        
-        details.push({
-            name: ind.name,
-            curDate: curDate,
-            curVal: curVal,
-            prevVal: prevVal,
-            prevDate: prevDate,
-            change: chg,
-            signal: sig
+    if (cat === '_overall') {
+        CAT_ORDER.forEach(function(c) {
+            var cd2 = MACRO_DATA[c];
+            if (!cd2) return;
+            var indicators2 = cd2.indicators || [];
+            var bull = 0, bear = 0, neutral = 0;
+            for (var i = 0; i < indicators2.length; i++) {
+                var ind = indicators2[i];
+                var dates = ind.chart_dates;
+                var vals = ind.chart_values;
+                if (!dates || dates.length < 2) continue;
+                var bestIdx = -1;
+                for (var j = dates.length - 1; j >= 0; j--) {
+                    if (dates[j] <= date) { bestIdx = j; break; }
+                }
+                if (bestIdx < 0) continue;
+                var curVal = vals[bestIdx];
+                var curDate = dates[bestIdx];
+                var target = new Date(curDate);
+                target.setDate(target.getDate() - 7);
+                var targetStr = target.toISOString().split('T')[0];
+                var prevIdx = -1;
+                for (var j = 0; j <= bestIdx; j++) {
+                    if (dates[j] <= targetStr) prevIdx = j;
+                }
+                var prevVal = prevIdx >= 0 ? vals[prevIdx] : vals[0];
+                var chg = curVal - prevVal;
+                var sig = 'neutral';
+                if (chg > 0.0001) sig = 'bearish';
+                else if (chg < -0.0001) sig = 'bullish';
+                if (sig === 'bullish') bull++;
+                else if (sig === 'bearish') bear++;
+                else neutral++;
+            }
+            details.push({
+                name: cd2.display || c,
+                bull: bull, bear: bear, neutral: neutral,
+                total: bull + bear + neutral
+            });
         });
+    } else {
+        // 单类：展示指标明细
+        for (var i = 0; i < indicators.length; i++) {
+            var ind = indicators[i];
+            var dates = ind.chart_dates;
+            var vals = ind.chart_values;
+            if (!dates || dates.length < 2) continue;
+            var bestIdx = -1;
+            for (var j = dates.length - 1; j >= 0; j--) {
+                if (dates[j] <= date) { bestIdx = j; break; }
+            }
+            if (bestIdx < 0) continue;
+            var curVal = vals[bestIdx];
+            var curDate = dates[bestIdx];
+            var target = new Date(curDate);
+            target.setDate(target.getDate() - 7);
+            var targetStr = target.toISOString().split('T')[0];
+            var prevIdx = -1;
+            for (var j = 0; j <= bestIdx; j++) {
+                if (dates[j] <= targetStr) prevIdx = j;
+            }
+            var prevVal = prevIdx >= 0 ? vals[prevIdx] : vals[0];
+            var prevDate = prevIdx >= 0 ? dates[prevIdx] : dates[0];
+            var chg = curVal - prevVal;
+            var sig = 'neutral';
+            if (chg > 0.0001) sig = 'bearish';
+            else if (chg < -0.0001) sig = 'bullish';
+            details.push({
+                name: ind.name,
+                curDate: curDate,
+                curVal: curVal,
+                prevVal: prevVal,
+                prevDate: prevDate,
+                change: chg,
+                signal: sig
+            });
+        }
     }
     
     // 弹窗
@@ -1814,35 +1875,77 @@ function showCatDetail(cat, date) {
     var title = document.getElementById('chartTitle');
     var container = document.getElementById('chartContainer');
     
-    // 统计看多/看空个数
-    var bullCount = 0, bearCount = 0, neutralCount = 0;
-    for (var i = 0; i < details.length; i++) {
-        if (details[i].signal === 'bullish') bullCount++;
-        else if (details[i].signal === 'bearish') bearCount++;
-        else neutralCount++;
-    }
-    
-    title.textContent = cd.display + ' - ' + date + ' 指标明细';
-    modal.classList.add('active');
-    
-    if (chartInstance) chartInstance.dispose();
-    if (ratioChartInstance) ratioChartInstance.dispose();
-    
-    // 用表格展示
-    var html = '<div style="overflow-y:auto;max-height:60vh;background:#fff;padding:0 24px 16px">' +
-        '<div style="display:flex;gap:16px;padding:8px 0;font-size:13px">' +
-        '<span style="color:var(--red);font-weight:600">看多 ' + bullCount + '</span>' +
-        '<span style="color:var(--green);font-weight:600">看空 ' + bearCount + '</span>' +
-        '<span style="color:var(--gray);font-weight:600">中性 ' + neutralCount + '</span>' +
-        '<span style="margin-left:auto;color:var(--text2)">共 ' + details.length + ' 个指标</span></div>' +
-        '<table style="width:100%;font-size:12px">' +
-        '<tr style="background:#f0f2f5">' +
-        '<th style="padding:6px 8px;text-align:left">指标</th>' +
-        '<th style="padding:6px 8px;text-align:right">日期</th>' +
-        '<th style="padding:6px 8px;text-align:right">上期值</th>' +
-        '<th style="padding:6px 8px;text-align:right">最新值</th>' +
-        '<th style="padding:6px 8px;text-align:right">变动</th>' +
-        '<th style="padding:6px 8px;text-align:center">方向</th></tr>';
+    if (cat === '_overall') {
+        // 大类汇总视图
+        var totalBull = 0, totalBear = 0, totalNeutral = 0;
+        for (var i = 0; i < details.length; i++) {
+            totalBull += details[i].bull;
+            totalBear += details[i].bear;
+            totalNeutral += details[i].neutral;
+        }
+        
+        title.textContent = '大类看多/看空汇总 - ' + date;
+        modal.classList.add('active');
+        
+        if (chartInstance) chartInstance.dispose();
+        if (ratioChartInstance) ratioChartInstance.dispose();
+        
+        var html = '<div style="overflow-y:auto;max-height:60vh;background:#fff;padding:0 24px 16px">' +
+            '<div style="display:flex;gap:16px;padding:8px 0;font-size:13px">' +
+            '<span style="color:var(--red);font-weight:600">看多 ' + totalBull + '</span>' +
+            '<span style="color:var(--green);font-weight:600">看空 ' + totalBear + '</span>' +
+            '<span style="color:var(--gray);font-weight:600">中性 ' + totalNeutral + '</span>' +
+            '<span style="margin-left:auto;color:var(--text2)">共 ' + (totalBull + totalBear + totalNeutral) + ' 个指标</span></div>' +
+            '<table style="width:100%;font-size:12px">' +
+            '<tr style="background:#f0f2f5">' +
+            '<th style="padding:6px 8px;text-align:left">大类</th>' +
+            '<th style="padding:6px 8px;text-align:right;color:var(--red)">看多</th>' +
+            '<th style="padding:6px 8px;text-align:right;color:var(--green)">看空</th>' +
+            '<th style="padding:6px 8px;text-align:right;color:var(--gray)">中性</th>' +
+            '<th style="padding:6px 8px;text-align:right">看多比例</th></tr>';
+        
+        for (var i = 0; i < details.length; i++) {
+            var d = details[i];
+            var ratio = d.total > 0 ? Math.round(d.bull / d.total * 100) : 0;
+            var ratioColor = d.bull > d.bear ? 'var(--red)' : (d.bear > d.bull ? 'var(--green)' : 'var(--gray)');
+            html += '<tr>' +
+                '<td style="padding:5px 8px;font-weight:600">' + d.name + '</td>' +
+                '<td style="padding:5px 8px;text-align:right;color:var(--red)">' + d.bull + '</td>' +
+                '<td style="padding:5px 8px;text-align:right;color:var(--green)">' + d.bear + '</td>' +
+                '<td style="padding:5px 8px;text-align:right;color:var(--gray)">' + d.neutral + '</td>' +
+                '<td style="padding:5px 8px;text-align:right;color:' + ratioColor + ';font-weight:600">' + ratio + '%</td></tr>';
+        }
+        html += '</table></div>';
+        container.innerHTML = html;
+    } else {
+        // 单类视图
+        var bullCount = 0, bearCount = 0, neutralCount = 0;
+        for (var i = 0; i < details.length; i++) {
+            if (details[i].signal === 'bullish') bullCount++;
+            else if (details[i].signal === 'bearish') bearCount++;
+            else neutralCount++;
+        }
+        
+        title.textContent = cd.display + ' - ' + date + ' 指标明细';
+        modal.classList.add('active');
+        
+        if (chartInstance) chartInstance.dispose();
+        if (ratioChartInstance) ratioChartInstance.dispose();
+        
+        var html = '<div style="overflow-y:auto;max-height:60vh;background:#fff;padding:0 24px 16px">' +
+            '<div style="display:flex;gap:16px;padding:8px 0;font-size:13px">' +
+            '<span style="color:var(--red);font-weight:600">看多 ' + bullCount + '</span>' +
+            '<span style="color:var(--green);font-weight:600">看空 ' + bearCount + '</span>' +
+            '<span style="color:var(--gray);font-weight:600">中性 ' + neutralCount + '</span>' +
+            '<span style="margin-left:auto;color:var(--text2)">共 ' + details.length + ' 个指标</span></div>' +
+            '<table style="width:100%;font-size:12px">' +
+            '<tr style="background:#f0f2f5">' +
+            '<th style="padding:6px 8px;text-align:left">指标</th>' +
+            '<th style="padding:6px 8px;text-align:right">日期</th>' +
+            '<th style="padding:6px 8px;text-align:right">上期值</th>' +
+            '<th style="padding:6px 8px;text-align:right">最新值</th>' +
+            '<th style="padding:6px 8px;text-align:right">变动</th>' +
+            '<th style="padding:6px 8px;text-align:center">方向</th></tr>';
     
     for (var i = 0; i < details.length; i++) {
         var d = details[i];
@@ -1858,7 +1961,8 @@ function showCatDetail(cat, date) {
             '<td style="padding:5px 8px;text-align:center"><span class="tag ' + sigClass + '">' + sigLabel + '</span></td></tr>';
     }
     html += '</table></div>';
-    container.innerHTML = html;
+        container.innerHTML = html;
+    }
 }
 
 document.getElementById('chartModal').addEventListener('click',function(e){if(e.target===this)closeChart()});

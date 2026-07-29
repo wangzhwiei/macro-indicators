@@ -67,7 +67,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <h1>📊 宏观高频指标观测面板</h1>
 <div class="sub">基于iFinD EDB/CJHX API日频/周频数据 · 华泰固收基本面分析框架 · 8大类110个指标 · 每日自动更新</div>
 <div class="stats">
-<span>📅 更新: 2026-07-28</span>
+<span>📅 更新: 2026-07-29</span>
 <span>📈 指标总数: 110</span>
 <span>🔄 日频67 + 周频43</span>
 </div>
@@ -1561,7 +1561,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--gray)}
 <td><span class="tag tag-bearish">利空</span></td>
 <td><span class="src-tag src-cjhx">CJHX</span></td>
 </tr></tbody></table></div></div></div></main>
-<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-28 03:31</footer>
+<footer>宏观高频指标观测面板 · 数据源:iFinD EDB/CJHX API · 华泰固收分析框架 · 生成时间: 2026-07-29 00:01</footer>
 <div class="modal" id="chartModal">
 <div class="modal-content">
 <div class="modal-header">
@@ -1671,7 +1671,6 @@ function renderOverallRatioChart(c) {
 
 function closeChart() {
     document.getElementById('chartModal').classList.remove('active');
-    document.getElementById('timeFilters').style.display = 'flex';
     if (ratioChartInstance) { ratioChartInstance.dispose(); ratioChartInstance = null; }
     if (chartInstance) { chartInstance.dispose(); chartInstance = null; }
     currentIndicator = null;
@@ -1886,6 +1885,7 @@ function showCatDetail(cat, date) {
         
         title.textContent = '大类看多/看空汇总 - ' + date;
         modal.classList.add('active');
+        document.getElementById('timeFilters').style.display = 'none';
         
         if (chartInstance) chartInstance.dispose();
         if (ratioChartInstance) ratioChartInstance.dispose();
@@ -1928,6 +1928,7 @@ function showCatDetail(cat, date) {
         
         title.textContent = cd.display + ' - ' + date + ' 指标明细';
         modal.classList.add('active');
+        document.getElementById('timeFilters').style.display = 'none';
         
         if (chartInstance) chartInstance.dispose();
         if (ratioChartInstance) ratioChartInstance.dispose();
